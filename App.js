@@ -1,21 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
+import { AppNavigator } from './routes/appNavigator';
+
+const getFonts = () => {
+  return Font.loadAsync({
+    'CG-regular': require('./assets/fonts/CormorantGaramond-Regular.ttf'),
+    'CG-bold': require('./assets/fonts/CormorantGaramond-Bold.ttf'),
+  });
+};
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  if (fontsLoaded) {
+    return <AppNavigator />;
+  } else {
+    return <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />;
+  }
+}
