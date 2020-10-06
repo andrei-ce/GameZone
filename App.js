@@ -2,7 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
-import { AppNavigator } from './routes/appNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+import { RootDrawerNavigator } from './routes/rootDrawer.js';
 
 const getFonts = () => {
   return Font.loadAsync({
@@ -15,7 +16,11 @@ export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   if (fontsLoaded) {
-    return <AppNavigator />;
+    return (
+      <NavigationContainer>
+        <RootDrawerNavigator />
+      </NavigationContainer>
+    );
   } else {
     return <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />;
   }
